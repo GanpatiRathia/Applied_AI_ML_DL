@@ -1,0 +1,1339 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{optional 1}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{write-a-function-that-inputs-a-number-and-prints-the-multiplication-table-of-that-number}{%
+\section{1. Write a function that inputs a number and prints the
+multiplication table of that
+number}\label{write-a-function-that-inputs-a-number-and-prints-the-multiplication-table-of-that-number}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}function for printing multiplication table of input number}
+\PY{k}{def} \PY{n+nf}{multiplicationTable}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} for taking input from user in integer format}
+    \PY{n}{number} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{input}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{}for printing multiplication table for input number}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}Multiplication table of}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{number}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{is\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{:}
+       \PY{n+nb}{print}\PY{p}{(}\PY{n}{number}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{=}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{number} \PY{o}{*} \PY{n}{i} \PY{p}{)}
+\PY{n}{multiplicationTable}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+4
+--Multiplication table of 4 is--
+4 x 1 = 4
+4 x 2 = 8
+4 x 3 = 12
+4 x 4 = 16
+4 x 5 = 20
+4 x 6 = 24
+4 x 7 = 28
+4 x 8 = 32
+4 x 9 = 36
+4 x 10 = 40
+    \end{Verbatim}
+
+    \hypertarget{write-a-program-to-print-twin-primes-less-than-1000.-if-two-consecutive-odd-numbers-are-both-prime-then-they-are-known-as-twin-primes}{%
+\section{2. Write a program to print twin primes less than 1000. If two
+consecutive odd numbers are both prime then they are known as twin
+primes}\label{write-a-program-to-print-twin-primes-less-than-1000.-if-two-consecutive-odd-numbers-are-both-prime-then-they-are-known-as-twin-primes}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}for checking if a number is prime number}
+\PY{k}{def} \PY{n+nf}{isPrime}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+   \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n}{n} \PY{o}{\PYZpc{}} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{False}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{True}
+\PY{c+c1}{\PYZsh{}for finding twin primes less than 1000 }
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Twin Primes less than 1000 }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{:}
+     \PY{n}{j} \PY{o}{=} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{2}
+     \PY{k}{if}\PY{p}{(}\PY{n}{isPrime}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o+ow}{and} \PY{n}{isPrime}\PY{p}{(}\PY{n}{j}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:d\PYZcb{}}\PY{l+s+s2}{ and }\PY{l+s+si}{\PYZob{}:d\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Twin Primes less than 1000
+3 and 5
+5 and 7
+7 and 9
+9 and 11
+11 and 13
+13 and 15
+15 and 17
+17 and 19
+19 and 21
+21 and 23
+23 and 25
+25 and 27
+27 and 29
+29 and 31
+31 and 33
+33 and 35
+35 and 37
+37 and 39
+39 and 41
+41 and 43
+43 and 45
+45 and 47
+47 and 49
+49 and 51
+51 and 53
+53 and 55
+55 and 57
+57 and 59
+59 and 61
+61 and 63
+63 and 65
+65 and 67
+67 and 69
+69 and 71
+71 and 73
+73 and 75
+75 and 77
+77 and 79
+79 and 81
+81 and 83
+83 and 85
+85 and 87
+87 and 89
+89 and 91
+91 and 93
+93 and 95
+95 and 97
+97 and 99
+99 and 101
+101 and 103
+103 and 105
+105 and 107
+107 and 109
+109 and 111
+111 and 113
+113 and 115
+115 and 117
+117 and 119
+119 and 121
+121 and 123
+123 and 125
+125 and 127
+127 and 129
+129 and 131
+131 and 133
+133 and 135
+135 and 137
+137 and 139
+139 and 141
+141 and 143
+143 and 145
+145 and 147
+147 and 149
+149 and 151
+151 and 153
+153 and 155
+155 and 157
+157 and 159
+159 and 161
+161 and 163
+163 and 165
+165 and 167
+167 and 169
+169 and 171
+171 and 173
+173 and 175
+175 and 177
+177 and 179
+179 and 181
+181 and 183
+183 and 185
+185 and 187
+187 and 189
+189 and 191
+191 and 193
+193 and 195
+195 and 197
+197 and 199
+199 and 201
+201 and 203
+203 and 205
+205 and 207
+207 and 209
+209 and 211
+211 and 213
+213 and 215
+215 and 217
+217 and 219
+219 and 221
+221 and 223
+223 and 225
+225 and 227
+227 and 229
+229 and 231
+231 and 233
+233 and 235
+235 and 237
+237 and 239
+239 and 241
+241 and 243
+243 and 245
+245 and 247
+247 and 249
+249 and 251
+251 and 253
+253 and 255
+255 and 257
+257 and 259
+259 and 261
+261 and 263
+263 and 265
+265 and 267
+267 and 269
+269 and 271
+271 and 273
+273 and 275
+275 and 277
+277 and 279
+279 and 281
+281 and 283
+283 and 285
+285 and 287
+287 and 289
+289 and 291
+291 and 293
+293 and 295
+295 and 297
+297 and 299
+299 and 301
+301 and 303
+303 and 305
+305 and 307
+307 and 309
+309 and 311
+311 and 313
+313 and 315
+315 and 317
+317 and 319
+319 and 321
+321 and 323
+323 and 325
+325 and 327
+327 and 329
+329 and 331
+331 and 333
+333 and 335
+335 and 337
+337 and 339
+339 and 341
+341 and 343
+343 and 345
+345 and 347
+347 and 349
+349 and 351
+351 and 353
+353 and 355
+355 and 357
+357 and 359
+359 and 361
+361 and 363
+363 and 365
+365 and 367
+367 and 369
+369 and 371
+371 and 373
+373 and 375
+375 and 377
+377 and 379
+379 and 381
+381 and 383
+383 and 385
+385 and 387
+387 and 389
+389 and 391
+391 and 393
+393 and 395
+395 and 397
+397 and 399
+399 and 401
+401 and 403
+403 and 405
+405 and 407
+407 and 409
+409 and 411
+411 and 413
+413 and 415
+415 and 417
+417 and 419
+419 and 421
+421 and 423
+423 and 425
+425 and 427
+427 and 429
+429 and 431
+431 and 433
+433 and 435
+435 and 437
+437 and 439
+439 and 441
+441 and 443
+443 and 445
+445 and 447
+447 and 449
+449 and 451
+451 and 453
+453 and 455
+455 and 457
+457 and 459
+459 and 461
+461 and 463
+463 and 465
+465 and 467
+467 and 469
+469 and 471
+471 and 473
+473 and 475
+475 and 477
+477 and 479
+479 and 481
+481 and 483
+483 and 485
+485 and 487
+487 and 489
+489 and 491
+491 and 493
+493 and 495
+495 and 497
+497 and 499
+499 and 501
+501 and 503
+503 and 505
+505 and 507
+507 and 509
+509 and 511
+511 and 513
+513 and 515
+515 and 517
+517 and 519
+519 and 521
+521 and 523
+523 and 525
+525 and 527
+527 and 529
+529 and 531
+531 and 533
+533 and 535
+535 and 537
+537 and 539
+539 and 541
+541 and 543
+543 and 545
+545 and 547
+547 and 549
+549 and 551
+551 and 553
+553 and 555
+555 and 557
+557 and 559
+559 and 561
+561 and 563
+563 and 565
+565 and 567
+567 and 569
+569 and 571
+571 and 573
+573 and 575
+575 and 577
+577 and 579
+579 and 581
+581 and 583
+583 and 585
+585 and 587
+587 and 589
+589 and 591
+591 and 593
+593 and 595
+595 and 597
+597 and 599
+599 and 601
+601 and 603
+603 and 605
+605 and 607
+607 and 609
+609 and 611
+611 and 613
+613 and 615
+615 and 617
+617 and 619
+619 and 621
+621 and 623
+623 and 625
+625 and 627
+627 and 629
+629 and 631
+631 and 633
+633 and 635
+635 and 637
+637 and 639
+639 and 641
+641 and 643
+643 and 645
+645 and 647
+647 and 649
+649 and 651
+651 and 653
+653 and 655
+655 and 657
+657 and 659
+659 and 661
+661 and 663
+663 and 665
+665 and 667
+667 and 669
+669 and 671
+671 and 673
+673 and 675
+675 and 677
+677 and 679
+679 and 681
+681 and 683
+683 and 685
+685 and 687
+687 and 689
+689 and 691
+691 and 693
+693 and 695
+695 and 697
+697 and 699
+699 and 701
+701 and 703
+703 and 705
+705 and 707
+707 and 709
+709 and 711
+711 and 713
+713 and 715
+715 and 717
+717 and 719
+719 and 721
+721 and 723
+723 and 725
+725 and 727
+727 and 729
+729 and 731
+731 and 733
+733 and 735
+735 and 737
+737 and 739
+739 and 741
+741 and 743
+743 and 745
+745 and 747
+747 and 749
+749 and 751
+751 and 753
+753 and 755
+755 and 757
+757 and 759
+759 and 761
+761 and 763
+763 and 765
+765 and 767
+767 and 769
+769 and 771
+771 and 773
+773 and 775
+775 and 777
+777 and 779
+779 and 781
+781 and 783
+783 and 785
+785 and 787
+787 and 789
+789 and 791
+791 and 793
+793 and 795
+795 and 797
+797 and 799
+799 and 801
+801 and 803
+803 and 805
+805 and 807
+807 and 809
+809 and 811
+811 and 813
+813 and 815
+815 and 817
+817 and 819
+819 and 821
+821 and 823
+823 and 825
+825 and 827
+827 and 829
+829 and 831
+831 and 833
+833 and 835
+835 and 837
+837 and 839
+839 and 841
+841 and 843
+843 and 845
+845 and 847
+847 and 849
+849 and 851
+851 and 853
+853 and 855
+855 and 857
+857 and 859
+859 and 861
+861 and 863
+863 and 865
+865 and 867
+867 and 869
+869 and 871
+871 and 873
+873 and 875
+875 and 877
+877 and 879
+879 and 881
+881 and 883
+883 and 885
+885 and 887
+887 and 889
+889 and 891
+891 and 893
+893 and 895
+895 and 897
+897 and 899
+899 and 901
+901 and 903
+903 and 905
+905 and 907
+907 and 909
+909 and 911
+911 and 913
+913 and 915
+915 and 917
+917 and 919
+919 and 921
+921 and 923
+923 and 925
+925 and 927
+927 and 929
+929 and 931
+931 and 933
+933 and 935
+935 and 937
+937 and 939
+939 and 941
+941 and 943
+943 and 945
+945 and 947
+947 and 949
+949 and 951
+951 and 953
+953 and 955
+955 and 957
+957 and 959
+959 and 961
+961 and 963
+963 and 965
+965 and 967
+967 and 969
+969 and 971
+971 and 973
+973 and 975
+975 and 977
+977 and 979
+979 and 981
+981 and 983
+983 and 985
+985 and 987
+987 and 989
+989 and 991
+991 and 993
+993 and 995
+995 and 997
+997 and 999
+999 and 1001
+    \end{Verbatim}
+
+    \hypertarget{write-a-program-to-find-out-the-prime-factors-of-a-number.-example-prime-factors-of-56---2-2-2-7}{%
+\section{3. Write a program to find out the prime factors of a number.
+Example: prime factors of 56 :- 2, 2, 2,
+7}\label{write-a-program-to-find-out-the-prime-factors-of-a-number.-example-prime-factors-of-56---2-2-2-7}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}function for printing prime factors of a number }
+\PY{k}{def} \PY{n+nf}{prime\PYZus{}factors}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:} 
+    \PY{k}{while} \PY{n}{n} \PY{o}{\PYZpc{}} \PY{l+m+mi}{2} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:} 
+        \PY{n+nb}{print} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} 
+        \PY{n}{n} \PY{o}{=} \PY{n}{n} \PY{o}{/} \PY{l+m+mi}{2}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{n} \PY{o}{*}\PY{o}{*} \PY{l+m+mf}{0.5}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{:} 
+        \PY{k}{while} \PY{n}{n} \PY{o}{\PYZpc{}} \PY{n}{i}\PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:} 
+            \PY{n+nb}{print} \PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{,} 
+            \PY{n}{n} \PY{o}{=} \PY{n}{n} \PY{o}{/} \PY{n}{i} 
+    \PY{k}{if} \PY{n}{n} \PY{o}{\PYZgt{}} \PY{l+m+mi}{2}\PY{p}{:} 
+        \PY{n+nb}{print} \PY{p}{(}\PY{n}{n}\PY{p}{)} 
+   
+\PY{n}{m} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{input}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}For taking input from user}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Prime Factors of}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{m}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{are \PYZhy{} }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{prime\PYZus{}factors}\PY{p}{(}\PY{n}{m}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+56
+Prime Factors of 56 are -
+2
+2
+2
+7.0
+    \end{Verbatim}
+
+    \hypertarget{write-a-program-to-implement-these-formulae-of-permutations-and-combinations.-number-of-permutations-of-n-objects-taken-r-at-a-time-pn-r-n-n-r.-number-of-combinations-of-n-objects-taken-r-at-a-time-is-cn-r-n-rn-r-pnr-r}{%
+\section{4. Write a program to implement these formulae of permutations
+and combinations. Number of permutations of n objects taken r at a time:
+p(n, r) = n! / (n-r)!. Number of combinations of n objects taken r at a
+time is: c(n, r) = n! / (r!*(n-r)!) = p(n,r) /
+r!}\label{write-a-program-to-implement-these-formulae-of-permutations-and-combinations.-number-of-permutations-of-n-objects-taken-r-at-a-time-pn-r-n-n-r.-number-of-combinations-of-n-objects-taken-r-at-a-time-is-cn-r-n-rn-r-pnr-r}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}function for returning factorial of a number}
+\PY{k}{def} \PY{n+nf}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:} 
+    \PY{n}{fact} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{;} 
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{n}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:} 
+        \PY{n}{fact} \PY{o}{=} \PY{n}{fact} \PY{o}{*} \PY{n}{i}\PY{p}{;} 
+    \PY{k}{return} \PY{n}{fact}\PY{p}{;} 
+\PY{c+c1}{\PYZsh{}function for returning Number of permutations of n objects taken r at a time}
+\PY{k}{def} \PY{n+nf}{nPr}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{r}\PY{p}{)}\PY{p}{:} 
+    \PY{n}{pnr} \PY{o}{=} \PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{o}{/} \PY{n}{factorial}\PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{n}{r}\PY{p}{)}\PY{p}{;} 
+    \PY{k}{return} \PY{n}{pnr}\PY{p}{;}  
+\PY{c+c1}{\PYZsh{}function for returning Number of combinations of n objects taken r at a time}
+\PY{k}{def} \PY{n+nf}{nCr}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{r}\PY{p}{)}\PY{p}{:} 
+    \PY{k}{return} \PY{p}{(}\PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{factorial}\PY{p}{(}\PY{n}{r}\PY{p}{)} \PY{o}{*} \PY{n}{factorial}\PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{n}{r}\PY{p}{)}\PY{p}{)}\PY{p}{)} 
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Number of permutations of 8 objects, taken 5 at a time is }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{nPr}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Number of combinations of 8 objects, taken 5 at a time is }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{nCr}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of permutations of 8 objects, taken 5 at a time is  6720.0
+Number of combinations of 8 objects, taken 5 at a time is  56.0
+    \end{Verbatim}
+
+    \hypertarget{write-a-function-that-converts-a-decimal-number-to-binary-number}{%
+\section{5. Write a function that converts a decimal number to binary
+number}\label{write-a-function-that-converts-a-decimal-number-to-binary-number}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{decimalToBinary}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:} 
+    \PY{n}{binaryNum} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{n} 
+    \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+    \PY{k}{while} \PY{p}{(}\PY{n}{n} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}  
+        \PY{n}{binaryNum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{n} \PY{o}{\PYZpc{}} \PY{l+m+mi}{2} 
+        \PY{n}{n} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{n} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+    \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:} 
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{binaryNum}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{,} \PY{n}{end} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Binary number of 45 is \PYZhy{} }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{decimalToBinary}\PY{p}{(}\PY{l+m+mi}{45}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Binary number of 45 is - 101101
+    \end{Verbatim}
+
+    \hypertarget{write-a-function-cubesum-that-accepts-an-integer-and-returns-the-sum-of-the-cubes-of-individual-digits-of-that-number.-use-this-function-to-make-functions-printarmstrong-and-isarmstrong-to-print-armstrong-numbers-and-to-find-whether-is-an-armstrong-number}{%
+\section{6. Write a function cubesum() that accepts an integer and
+returns the sum of the cubes of individual digits of that number. Use
+this function to make functions PrintArmstrong() and isArmstrong() to
+print Armstrong numbers and to find whether is an Armstrong
+number}\label{write-a-function-cubesum-that-accepts-an-integer-and-returns-the-sum-of-the-cubes-of-individual-digits-of-that-number.-use-this-function-to-make-functions-printarmstrong-and-isarmstrong-to-print-armstrong-numbers-and-to-find-whether-is-an-armstrong-number}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}function to add cube of digits}
+\PY{k}{def} \PY{n+nf}{cubesum}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{n}{temp} \PY{o}{=} \PY{n}{n}
+    \PY{n+nb}{sum} \PY{o}{=} \PY{l+m+mi}{0}
+    \PY{k}{while} \PY{n}{temp} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{n}{digit} \PY{o}{=} \PY{n}{temp} \PY{o}{\PYZpc{}} \PY{l+m+mi}{10}
+        \PY{n+nb}{sum} \PY{o}{+}\PY{o}{=} \PY{n}{digit} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{3}
+        \PY{n}{temp} \PY{o}{/}\PY{o}{/}\PY{o}{=} \PY{l+m+mi}{10}
+    \PY{k}{return} \PY{n+nb}{sum}
+
+\PY{k}{def} \PY{n+nf}{isArmstrong}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{p}{(}\PY{n}{x} \PY{o}{==} \PY{n}{cubesum}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{True}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{False}
+
+\PY{k}{def} \PY{n+nf}{PrintArmstrong}\PY{p}{(}\PY{n+nb}{min}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{min}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if}\PY{p}{(}\PY{n}{isArmstrong}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Armstrong number in range 1\PYZhy{}1000 are :\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{PrintArmstrong}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1000}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Armstrong number in range 1-1000 are :-
+1
+153
+370
+371
+407
+    \end{Verbatim}
+
+    \hypertarget{write-a-function-proddigits-that-inputs-a-number-and-returns-the-product-of-digits-of-that-number.}{%
+\section{7. Write a function prodDigits() that inputs a number and
+returns the product of digits of that
+number.}\label{write-a-function-proddigits-that-inputs-a-number-and-returns-the-product-of-digits-of-that-number.}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Function to get product of digits }
+\PY{k}{def} \PY{n+nf}{prodDigits}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{n}{product} \PY{o}{=} \PY{l+m+mi}{1}
+    \PY{k}{while} \PY{p}{(}\PY{n}{n} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:} 
+        \PY{n}{product} \PY{o}{=} \PY{n}{product} \PY{o}{*} \PY{p}{(}\PY{n}{n} \PY{o}{\PYZpc{}} \PY{l+m+mi}{10}\PY{p}{)} 
+        \PY{n}{n} \PY{o}{=} \PY{n}{n} \PY{o}{/}\PY{o}{/} \PY{l+m+mi}{10}
+    \PY{k}{return} \PY{n}{product} 
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Product of digits of number 4671 is :\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{prodDigits}\PY{p}{(}\PY{l+m+mi}{4671}\PY{p}{)}\PY{p}{)} 
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Product of digits of number 4671 is :- 168
+    \end{Verbatim}
+
+    \hypertarget{if-all-digits-of-a-number-n-are-multiplied-by-each-other-repeating-with-the-product-the-one-digit-number-obtained-at-last-is-called-the-multiplicative-digital-root-of-n.-the-number-of-times-digits-need-to-be-multiplied-to-reach-one-digit-is-called-the-multiplicative-persistance-of-n.-example-86---48---32---6-mdr-6-mpersistence-3-341---12-2-mdr-2-mpersistence-2-using-the-function-proddigits-of-previous-exercise-write-functions-mdr-and-mpersistence-that-input-a-number-and-return-its-multiplicative-digital-root-and-multiplicative-persistence-respectively}{%
+\section{8. If all digits of a number n are multiplied by each other
+repeating with the product, the one digit number obtained at last is
+called the multiplicative digital root of n.~The number of times digits
+need to be multiplied to reach one digit is called the multiplicative
+persistance of n.~Example: 86 -\textgreater{} 48 -\textgreater{} 32
+-\textgreater{} 6 (MDR 6, MPersistence 3) 341 -\textgreater{}
+12-\textgreater2 (MDR 2, MPersistence 2) Using the function prodDigits()
+of previous exercise write functions MDR() and MPersistence() that input
+a number and return its multiplicative digital root and multiplicative
+persistence
+respectively}\label{if-all-digits-of-a-number-n-are-multiplied-by-each-other-repeating-with-the-product-the-one-digit-number-obtained-at-last-is-called-the-multiplicative-digital-root-of-n.-the-number-of-times-digits-need-to-be-multiplied-to-reach-one-digit-is-called-the-multiplicative-persistance-of-n.-example-86---48---32---6-mdr-6-mpersistence-3-341---12-2-mdr-2-mpersistence-2-using-the-function-proddigits-of-previous-exercise-write-functions-mdr-and-mpersistence-that-input-a-number-and-return-its-multiplicative-digital-root-and-multiplicative-persistence-respectively}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{MDR}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{n}{temp} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+    \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{temp}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}\PY{p}{:}
+        \PY{n}{temp} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{prodDigits}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{temp}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{n+nb}{int}\PY{p}{(}\PY{n}{temp}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MDR of 86 : }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{MDR}\PY{p}{(}\PY{l+m+mi}{86}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MDR of 341 : }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{MDR}\PY{p}{(}\PY{l+m+mi}{341}\PY{p}{)}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{MPersistence}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{n}{temp} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{n}\PY{p}{)}
+    \PY{n}{pers} \PY{o}{=} \PY{l+m+mi}{0}
+    \PY{k}{while} \PY{n+nb}{len}\PY{p}{(}\PY{n}{temp}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}\PY{p}{:}
+        \PY{n}{temp} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{prodDigits}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{temp}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+        \PY{n}{pers} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+    \PY{k}{return} \PY{n}{pers}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MPersistence of 86 : }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{MPersistence}\PY{p}{(}\PY{l+m+mi}{86}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MPersistence of 341 : }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{MPersistence}\PY{p}{(}\PY{l+m+mi}{341}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+MDR of 86 :  6
+MDR of 341 :  2
+MPersistence of 86 :  3
+MPersistence of 341 :  2
+    \end{Verbatim}
+
+    \hypertarget{write-a-function-sumpdivisors-that-finds-the-sum-of-proper-divisors-of-a-number.-proper-divisors-of-a-number-are-those-numbers-by-which-the-number-is-divisible-except-the-number-itself.-for-example-proper-divisors-of-36-are-1-2-3-4-6-9-18}{%
+\section{9. Write a function sumPdivisors() that finds the sum of proper
+divisors of a number. Proper divisors of a number are those numbers by
+which the number is divisible, except the number itself. For example
+proper divisors of 36 are 1, 2, 3, 4, 6, 9,
+18}\label{write-a-function-sumpdivisors-that-finds-the-sum-of-proper-divisors-of-a-number.-proper-divisors-of-a-number-are-those-numbers-by-which-the-number-is-divisible-except-the-number-itself.-for-example-proper-divisors-of-36-are-1-2-3-4-6-9-18}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{sumPdivisors}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{p}{:} 
+    \PY{n+nb}{sum} \PY{o}{=} \PY{l+m+mi}{0}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n+nb}{int}\PY{p}{(}\PY{n}{n}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{p}{:} 
+        \PY{k}{if} \PY{p}{(}\PY{n}{n} \PY{o}{\PYZpc{}} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)} \PY{p}{:}
+            \PY{k}{if} \PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{n+nb}{int}\PY{p}{(}\PY{n}{n} \PY{o}{/} \PY{n}{i}\PY{p}{)}\PY{p}{)} \PY{p}{:} 
+                \PY{n+nb}{sum} \PY{o}{=} \PY{n+nb}{sum} \PY{o}{+} \PY{n}{i} 
+            \PY{k}{else} \PY{p}{:} 
+                \PY{n+nb}{sum} \PY{o}{=} \PY{n+nb}{sum} \PY{o}{+} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{n+nb}{int}\PY{p}{(}\PY{n}{n} \PY{o}{/} \PY{n}{i}\PY{p}{)}\PY{p}{)} 
+    \PY{k}{return} \PY{p}{(}\PY{n+nb}{sum} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sum of proper divisors of 36 is :}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{sumPdivisors}\PY{p}{(}\PY{l+m+mi}{36}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+sum of proper divisors of 36 is : 55
+    \end{Verbatim}
+
+    \hypertarget{a-number-is-called-perfect-if-the-sum-of-proper-divisors-of-that-number-is-equal-to-the-number.-for-example-28-is-perfect-number-since-12471428.-write-a-program-to-print-all-the-perfect-numbers-in-a-given-range}{%
+\section{10. A number is called perfect if the sum of proper divisors of
+that number is equal to the number. For example 28 is perfect number,
+since 1+2+4+7+14=28. Write a program to print all the perfect numbers in
+a given
+range}\label{a-number-is-called-perfect-if-the-sum-of-proper-divisors-of-that-number-is-equal-to-the-number.-for-example-28-is-perfect-number-since-12471428.-write-a-program-to-print-all-the-perfect-numbers-in-a-given-range}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{perfectNumbers}\PY{p}{(}\PY{n+nb}{min}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{min}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if}\PY{p}{(}\PY{n}{i} \PY{o}{==} \PY{n}{sumPdivisors}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Perfect numbers in range 1\PYZhy{}1000 are :}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{perfectNumbers}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1000}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Perfect numbers in range 1-1000 are :
+1
+6
+28
+496
+    \end{Verbatim}
+
+    \hypertarget{two-different-numbers-are-called-amicable-numbers-if-the-sum-of-the-proper-divisors-of-each-is-equal-to-the-other-number.-for-example-220-and-284-are-amicable-numbers.sum-of-proper-divisors-of-220-1-2-4-5-10-11-20-22-44-55-110-284-sum-of-proper-divisors-of-284-1-2-4-71-142-220-.-write-a-function-to-print-pairs-of-amicable-numbers-in-a-range}{%
+\section{11. Two different numbers are called amicable numbers if the
+sum of the proper divisors of each is equal to the other number. For
+example 220 and 284 are amicable numbers.Sum of proper divisors of 220 =
+1 + 2 + 4 + 5 + 10 + 11 + 20 + 22 + 44 +55 + 110 = 284 Sum of proper
+divisors of 284 = 1 + 2 + 4 + 71 + 142 = 220 . Write a function to print
+pairs of amicable numbers in a
+range}\label{two-different-numbers-are-called-amicable-numbers-if-the-sum-of-the-proper-divisors-of-each-is-equal-to-the-other-number.-for-example-220-and-284-are-amicable-numbers.sum-of-proper-divisors-of-220-1-2-4-5-10-11-20-22-44-55-110-284-sum-of-proper-divisors-of-284-1-2-4-71-142-220-.-write-a-function-to-print-pairs-of-amicable-numbers-in-a-range}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{amicablePairs}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{p}{:} 
+  
+    \PY{k}{if} \PY{p}{(}\PY{n}{sumPdivisors}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{!=} \PY{n}{y}\PY{p}{)} \PY{p}{:} 
+        \PY{k}{return} \PY{k+kc}{False}
+          
+    \PY{k}{return} \PY{p}{(}\PY{n}{sumPdivisors}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{o}{==} \PY{n}{x}\PY{p}{)}
+
+\PY{k}{def} \PY{n+nf}{amicableNumbers}\PY{p}{(}\PY{n+nb}{min}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{min}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if}\PY{p}{(}\PY{n}{amicablePairs}\PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{n}{j}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Amicable number in range 1\PYZhy{}2000 :}\PY{l+s+s2}{\PYZdq{}} \PY{p}{)}
+\PY{n}{amicableNumbers}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2000}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Amicable number in range 1-2000 :
+220 284
+1184 1210
+    \end{Verbatim}
+
+    \hypertarget{write-a-program-which-can-filter-odd-numbers-in-a-list-by-using-filter-function}{%
+\section{12. Write a program which can filter odd numbers in a list by
+using filter
+function}\label{write-a-program-which-can-filter-odd-numbers-in-a-list-by-using-filter-function}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{list1} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{101}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{24}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{13}\PY{p}{,}\PY{l+m+mi}{22}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{,}\PY{l+m+mi}{99}\PY{p}{]}
+\PY{k}{def} \PY{n+nf}{Odd}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n}{x} \PY{o}{\PYZpc{}} \PY{l+m+mi}{2} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{True}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{False}
+
+\PY{n}{odd\PYZus{}list} \PY{o}{=} \PY{n+nb}{filter}\PY{p}{(}\PY{n}{Odd} \PY{p}{,} \PY{n}{list1}\PY{p}{)}
+\PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{odd\PYZus{}list}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+101
+1
+3
+5
+9
+13
+17
+99
+    \end{Verbatim}
+
+    \hypertarget{write-a-program-which-can-map-to-make-a-list-whose-elements-are-cube-of-elements-in-a-given-list}{%
+\section{13. Write a program which can map() to make a list whose
+elements are cube of elements in a given
+list}\label{write-a-program-which-can-map-to-make-a-list-whose-elements-are-cube-of-elements-in-a-given-list}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{list2} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{]}
+\PY{k}{def} \PY{n+nf}{cube}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{x}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{n}{x}
+\PY{n}{cube\PYZus{}list} \PY{o}{=} \PY{n+nb}{map}\PY{p}{(}\PY{n}{cube}\PY{p}{,} \PY{n}{list2}\PY{p}{)}
+\PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{cube\PYZus{}list}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1
+8
+27
+64
+125
+216
+    \end{Verbatim}
+
+    \hypertarget{write-a-program-which-can-map-and-filter-to-make-a-list-whose-elements-are-cube-of-even-number-in-a-given-list}{%
+\section{14. Write a program which can map() and filter() to make a list
+whose elements are cube of even number in a given
+list}\label{write-a-program-which-can-map-and-filter-to-make-a-list-whose-elements-are-cube-of-even-number-in-a-given-list}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{list3} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{101}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{24}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{13}\PY{p}{,}\PY{l+m+mi}{22}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{,}\PY{l+m+mi}{99}\PY{p}{]}
+
+\PY{k}{def} \PY{n+nf}{Even}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n}{x} \PY{o}{\PYZpc{}} \PY{l+m+mi}{2} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{True}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{return} \PY{k+kc}{False}
+
+\PY{n}{even\PYZus{}list} \PY{o}{=} \PY{n+nb}{filter}\PY{p}{(}\PY{n}{Even}\PY{p}{,} \PY{n}{list3}\PY{p}{)}
+\PY{n}{even\PYZus{}cube\PYZus{}list} \PY{o}{=} \PY{n+nb}{map}\PY{p}{(}\PY{n}{cube}\PY{p}{,} \PY{n}{even\PYZus{}list}\PY{p}{)} \PY{c+c1}{\PYZsh{}using cube function made in problem 13}
+
+\PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{even\PYZus{}cube\PYZus{}list}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1000
+13824
+8
+64
+10648
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
