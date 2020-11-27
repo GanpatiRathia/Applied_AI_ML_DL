@@ -155,7 +155,7 @@
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
     % Document parameters
     % Document title
-    \title{optional 1}
+    \title{optional\_1}
     
     
     
@@ -385,7 +385,7 @@ multiplication table of that
 number}\label{write-a-function-that-inputs-a-number-and-prints-the-multiplication-table-of-that-number}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{8}{\boxspacing}
+\prompt{In}{incolor}{1}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{}function for printing multiplication table of input number}
 \PY{k}{def} \PY{n+nf}{multiplicationTable}\PY{p}{(}\PY{p}{)}\PY{p}{:}
@@ -400,18 +400,18 @@ number}\label{write-a-function-that-inputs-a-number-and-prints-the-multiplicatio
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-4
---Multiplication table of 4 is--
-4 x 1 = 4
-4 x 2 = 8
-4 x 3 = 12
-4 x 4 = 16
-4 x 5 = 20
-4 x 6 = 24
-4 x 7 = 28
-4 x 8 = 32
-4 x 9 = 36
-4 x 10 = 40
+2
+--Multiplication table of 2 is--
+2 x 1 = 2
+2 x 2 = 4
+2 x 3 = 6
+2 x 4 = 8
+2 x 5 = 10
+2 x 6 = 12
+2 x 7 = 14
+2 x 8 = 16
+2 x 9 = 18
+2 x 10 = 20
     \end{Verbatim}
 
     \hypertarget{write-a-program-to-print-twin-primes-less-than-1000.-if-two-consecutive-odd-numbers-are-both-prime-then-they-are-known-as-twin-primes}{%
@@ -420,525 +420,57 @@ consecutive odd numbers are both prime then they are known as twin
 primes}\label{write-a-program-to-print-twin-primes-less-than-1000.-if-two-consecutive-odd-numbers-are-both-prime-then-they-are-known-as-twin-primes}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{9}{\boxspacing}
+\prompt{In}{incolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{}for checking if a number is prime number}
 \PY{k}{def} \PY{n+nf}{isPrime}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
-   \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{:}
-    \PY{k}{if} \PY{n}{n} \PY{o}{\PYZpc{}} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
-        \PY{k}{return} \PY{k+kc}{False}
-    \PY{k}{else}\PY{p}{:}
-        \PY{k}{return} \PY{k+kc}{True}
-\PY{c+c1}{\PYZsh{}for finding twin primes less than 1000 }
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Twin Primes less than 1000 }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{:}
-     \PY{n}{j} \PY{o}{=} \PY{n}{i} \PY{o}{+} \PY{l+m+mi}{2}
-     \PY{k}{if}\PY{p}{(}\PY{n}{isPrime}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o+ow}{and} \PY{n}{isPrime}\PY{p}{(}\PY{n}{j}\PY{p}{)}\PY{p}{)}\PY{p}{:}
-        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:d\PYZcb{}}\PY{l+s+s2}{ and }\PY{l+s+si}{\PYZob{}:d\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if}\PY{p}{(}\PY{n}{n}\PY{o}{\PYZpc{}}\PY{k}{i}==0):
+            \PY{k}{return} \PY{k+kc}{False}
+    \PY{k}{return} \PY{k+kc}{True}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Twin Primes between 1 and 1000 are : \PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}    
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1000}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if}\PY{p}{(}\PY{n}{isPrime}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o+ow}{and} \PY{n}{isPrime}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print} \PY{p}{(}\PY{n}{i}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{2}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Twin Primes less than 1000
-3 and 5
-5 and 7
-7 and 9
-9 and 11
-11 and 13
-13 and 15
-15 and 17
-17 and 19
-19 and 21
-21 and 23
-23 and 25
-25 and 27
-27 and 29
-29 and 31
-31 and 33
-33 and 35
-35 and 37
-37 and 39
-39 and 41
-41 and 43
-43 and 45
-45 and 47
-47 and 49
-49 and 51
-51 and 53
-53 and 55
-55 and 57
-57 and 59
-59 and 61
-61 and 63
-63 and 65
-65 and 67
-67 and 69
-69 and 71
-71 and 73
-73 and 75
-75 and 77
-77 and 79
-79 and 81
-81 and 83
-83 and 85
-85 and 87
-87 and 89
-89 and 91
-91 and 93
-93 and 95
-95 and 97
-97 and 99
-99 and 101
-101 and 103
-103 and 105
-105 and 107
-107 and 109
-109 and 111
-111 and 113
-113 and 115
-115 and 117
-117 and 119
-119 and 121
-121 and 123
-123 and 125
-125 and 127
-127 and 129
-129 and 131
-131 and 133
-133 and 135
-135 and 137
-137 and 139
-139 and 141
-141 and 143
-143 and 145
-145 and 147
-147 and 149
-149 and 151
-151 and 153
-153 and 155
-155 and 157
-157 and 159
-159 and 161
-161 and 163
-163 and 165
-165 and 167
-167 and 169
-169 and 171
-171 and 173
-173 and 175
-175 and 177
-177 and 179
-179 and 181
-181 and 183
-183 and 185
-185 and 187
-187 and 189
-189 and 191
-191 and 193
-193 and 195
-195 and 197
-197 and 199
-199 and 201
-201 and 203
-203 and 205
-205 and 207
-207 and 209
-209 and 211
-211 and 213
-213 and 215
-215 and 217
-217 and 219
-219 and 221
-221 and 223
-223 and 225
-225 and 227
-227 and 229
-229 and 231
-231 and 233
-233 and 235
-235 and 237
-237 and 239
-239 and 241
-241 and 243
-243 and 245
-245 and 247
-247 and 249
-249 and 251
-251 and 253
-253 and 255
-255 and 257
-257 and 259
-259 and 261
-261 and 263
-263 and 265
-265 and 267
-267 and 269
-269 and 271
-271 and 273
-273 and 275
-275 and 277
-277 and 279
-279 and 281
-281 and 283
-283 and 285
-285 and 287
-287 and 289
-289 and 291
-291 and 293
-293 and 295
-295 and 297
-297 and 299
-299 and 301
-301 and 303
-303 and 305
-305 and 307
-307 and 309
-309 and 311
-311 and 313
-313 and 315
-315 and 317
-317 and 319
-319 and 321
-321 and 323
-323 and 325
-325 and 327
-327 and 329
-329 and 331
-331 and 333
-333 and 335
-335 and 337
-337 and 339
-339 and 341
-341 and 343
-343 and 345
-345 and 347
-347 and 349
-349 and 351
-351 and 353
-353 and 355
-355 and 357
-357 and 359
-359 and 361
-361 and 363
-363 and 365
-365 and 367
-367 and 369
-369 and 371
-371 and 373
-373 and 375
-375 and 377
-377 and 379
-379 and 381
-381 and 383
-383 and 385
-385 and 387
-387 and 389
-389 and 391
-391 and 393
-393 and 395
-395 and 397
-397 and 399
-399 and 401
-401 and 403
-403 and 405
-405 and 407
-407 and 409
-409 and 411
-411 and 413
-413 and 415
-415 and 417
-417 and 419
-419 and 421
-421 and 423
-423 and 425
-425 and 427
-427 and 429
-429 and 431
-431 and 433
-433 and 435
-435 and 437
-437 and 439
-439 and 441
-441 and 443
-443 and 445
-445 and 447
-447 and 449
-449 and 451
-451 and 453
-453 and 455
-455 and 457
-457 and 459
-459 and 461
-461 and 463
-463 and 465
-465 and 467
-467 and 469
-469 and 471
-471 and 473
-473 and 475
-475 and 477
-477 and 479
-479 and 481
-481 and 483
-483 and 485
-485 and 487
-487 and 489
-489 and 491
-491 and 493
-493 and 495
-495 and 497
-497 and 499
-499 and 501
-501 and 503
-503 and 505
-505 and 507
-507 and 509
-509 and 511
-511 and 513
-513 and 515
-515 and 517
-517 and 519
-519 and 521
-521 and 523
-523 and 525
-525 and 527
-527 and 529
-529 and 531
-531 and 533
-533 and 535
-535 and 537
-537 and 539
-539 and 541
-541 and 543
-543 and 545
-545 and 547
-547 and 549
-549 and 551
-551 and 553
-553 and 555
-555 and 557
-557 and 559
-559 and 561
-561 and 563
-563 and 565
-565 and 567
-567 and 569
-569 and 571
-571 and 573
-573 and 575
-575 and 577
-577 and 579
-579 and 581
-581 and 583
-583 and 585
-585 and 587
-587 and 589
-589 and 591
-591 and 593
-593 and 595
-595 and 597
-597 and 599
-599 and 601
-601 and 603
-603 and 605
-605 and 607
-607 and 609
-609 and 611
-611 and 613
-613 and 615
-615 and 617
-617 and 619
-619 and 621
-621 and 623
-623 and 625
-625 and 627
-627 and 629
-629 and 631
-631 and 633
-633 and 635
-635 and 637
-637 and 639
-639 and 641
-641 and 643
-643 and 645
-645 and 647
-647 and 649
-649 and 651
-651 and 653
-653 and 655
-655 and 657
-657 and 659
-659 and 661
-661 and 663
-663 and 665
-665 and 667
-667 and 669
-669 and 671
-671 and 673
-673 and 675
-675 and 677
-677 and 679
-679 and 681
-681 and 683
-683 and 685
-685 and 687
-687 and 689
-689 and 691
-691 and 693
-693 and 695
-695 and 697
-697 and 699
-699 and 701
-701 and 703
-703 and 705
-705 and 707
-707 and 709
-709 and 711
-711 and 713
-713 and 715
-715 and 717
-717 and 719
-719 and 721
-721 and 723
-723 and 725
-725 and 727
-727 and 729
-729 and 731
-731 and 733
-733 and 735
-735 and 737
-737 and 739
-739 and 741
-741 and 743
-743 and 745
-745 and 747
-747 and 749
-749 and 751
-751 and 753
-753 and 755
-755 and 757
-757 and 759
-759 and 761
-761 and 763
-763 and 765
-765 and 767
-767 and 769
-769 and 771
-771 and 773
-773 and 775
-775 and 777
-777 and 779
-779 and 781
-781 and 783
-783 and 785
-785 and 787
-787 and 789
-789 and 791
-791 and 793
-793 and 795
-795 and 797
-797 and 799
-799 and 801
-801 and 803
-803 and 805
-805 and 807
-807 and 809
-809 and 811
-811 and 813
-813 and 815
-815 and 817
-817 and 819
-819 and 821
-821 and 823
-823 and 825
-825 and 827
-827 and 829
-829 and 831
-831 and 833
-833 and 835
-835 and 837
-837 and 839
-839 and 841
-841 and 843
-843 and 845
-845 and 847
-847 and 849
-849 and 851
-851 and 853
-853 and 855
-855 and 857
-857 and 859
-859 and 861
-861 and 863
-863 and 865
-865 and 867
-867 and 869
-869 and 871
-871 and 873
-873 and 875
-875 and 877
-877 and 879
-879 and 881
-881 and 883
-883 and 885
-885 and 887
-887 and 889
-889 and 891
-891 and 893
-893 and 895
-895 and 897
-897 and 899
-899 and 901
-901 and 903
-903 and 905
-905 and 907
-907 and 909
-909 and 911
-911 and 913
-913 and 915
-915 and 917
-917 and 919
-919 and 921
-921 and 923
-923 and 925
-925 and 927
-927 and 929
-929 and 931
-931 and 933
-933 and 935
-935 and 937
-937 and 939
-939 and 941
-941 and 943
-943 and 945
-945 and 947
-947 and 949
-949 and 951
-951 and 953
-953 and 955
-955 and 957
-957 and 959
-959 and 961
-961 and 963
-963 and 965
-965 and 967
-967 and 969
-969 and 971
-971 and 973
-973 and 975
-975 and 977
-977 and 979
-979 and 981
-981 and 983
-983 and 985
-985 and 987
-987 and 989
-989 and 991
-991 and 993
-993 and 995
-995 and 997
-997 and 999
-999 and 1001
+Twin Primes between 1 and 1000 are : -
+3 , 5
+5 , 7
+11 , 13
+17 , 19
+29 , 31
+41 , 43
+59 , 61
+71 , 73
+101 , 103
+107 , 109
+137 , 139
+149 , 151
+179 , 181
+191 , 193
+197 , 199
+227 , 229
+239 , 241
+269 , 271
+281 , 283
+311 , 313
+347 , 349
+419 , 421
+431 , 433
+461 , 463
+521 , 523
+569 , 571
+599 , 601
+617 , 619
+641 , 643
+659 , 661
+809 , 811
+821 , 823
+827 , 829
+857 , 859
+881 , 883
     \end{Verbatim}
 
     \hypertarget{write-a-program-to-find-out-the-prime-factors-of-a-number.-example-prime-factors-of-56---2-2-2-7}{%
@@ -947,7 +479,7 @@ Example: prime factors of 56 :- 2, 2, 2,
 7}\label{write-a-program-to-find-out-the-prime-factors-of-a-number.-example-prime-factors-of-56---2-2-2-7}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
+\prompt{In}{incolor}{11}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{}function for printing prime factors of a number }
 \PY{k}{def} \PY{n+nf}{prime\PYZus{}factors}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:} 
@@ -984,7 +516,7 @@ time is: c(n, r) = n! / (r!*(n-r)!) = p(n,r) /
 r!}\label{write-a-program-to-implement-these-formulae-of-permutations-and-combinations.-number-of-permutations-of-n-objects-taken-r-at-a-time-pn-r-n-n-r.-number-of-combinations-of-n-objects-taken-r-at-a-time-is-cn-r-n-rn-r-pnr-r}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{}function for returning factorial of a number}
 \PY{k}{def} \PY{n+nf}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:} 
@@ -1015,7 +547,7 @@ Number of combinations of 8 objects, taken 5 at a time is  56.0
 number}\label{write-a-function-that-converts-a-decimal-number-to-binary-number}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
+\prompt{In}{incolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{decimalToBinary}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:} 
     \PY{n}{binaryNum} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{n} 
@@ -1043,7 +575,7 @@ print Armstrong numbers and to find whether is an Armstrong
 number}\label{write-a-function-cubesum-that-accepts-an-integer-and-returns-the-sum-of-the-cubes-of-individual-digits-of-that-number.-use-this-function-to-make-functions-printarmstrong-and-isarmstrong-to-print-armstrong-numbers-and-to-find-whether-is-an-armstrong-number}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{13}{\boxspacing}
+\prompt{In}{incolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{}function to add cube of digits}
 \PY{k}{def} \PY{n+nf}{cubesum}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
@@ -1085,7 +617,7 @@ returns the product of digits of that
 number.}\label{write-a-function-proddigits-that-inputs-a-number-and-returns-the-product-of-digits-of-that-number.}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
+\prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Function to get product of digits }
 \PY{k}{def} \PY{n+nf}{prodDigits}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
@@ -1116,7 +648,7 @@ persistence
 respectively}\label{if-all-digits-of-a-number-n-are-multiplied-by-each-other-repeating-with-the-product-the-one-digit-number-obtained-at-last-is-called-the-multiplicative-digital-root-of-n.-the-number-of-times-digits-need-to-be-multiplied-to-reach-one-digit-is-called-the-multiplicative-persistance-of-n.-example-86---48---32---6-mdr-6-mpersistence-3-341---12-2-mdr-2-mpersistence-2-using-the-function-proddigits-of-previous-exercise-write-functions-mdr-and-mpersistence-that-input-a-number-and-return-its-multiplicative-digital-root-and-multiplicative-persistence-respectively}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{MDR}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
     \PY{n}{temp} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{n}\PY{p}{)}
@@ -1152,7 +684,7 @@ proper divisors of 36 are 1, 2, 3, 4, 6, 9,
 18}\label{write-a-function-sumpdivisors-that-finds-the-sum-of-proper-divisors-of-a-number.-proper-divisors-of-a-number-are-those-numbers-by-which-the-number-is-divisible-except-the-number-itself.-for-example-proper-divisors-of-36-are-1-2-3-4-6-9-18}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
+\prompt{In}{incolor}{17}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{sumPdivisors}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{p}{:} 
     \PY{n+nb}{sum} \PY{o}{=} \PY{l+m+mi}{0}
@@ -1179,7 +711,7 @@ a given
 range}\label{a-number-is-called-perfect-if-the-sum-of-proper-divisors-of-that-number-is-equal-to-the-number.-for-example-28-is-perfect-number-since-12471428.-write-a-program-to-print-all-the-perfect-numbers-in-a-given-range}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{17}{\boxspacing}
+\prompt{In}{incolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{perfectNumbers}\PY{p}{(}\PY{n+nb}{min}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
     \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{min}\PY{p}{,}\PY{n+nb}{max}\PY{p}{)}\PY{p}{:}
@@ -1208,7 +740,7 @@ pairs of amicable numbers in a
 range}\label{two-different-numbers-are-called-amicable-numbers-if-the-sum-of-the-proper-divisors-of-each-is-equal-to-the-other-number.-for-example-220-and-284-are-amicable-numbers.sum-of-proper-divisors-of-220-1-2-4-5-10-11-20-22-44-55-110-284-sum-of-proper-divisors-of-284-1-2-4-71-142-220-.-write-a-function-to-print-pairs-of-amicable-numbers-in-a-range}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{18}{\boxspacing}
+\prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{amicablePairs}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{p}{:} 
   
@@ -1240,7 +772,7 @@ using filter
 function}\label{write-a-program-which-can-filter-odd-numbers-in-a-list-by-using-filter-function}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{19}{\boxspacing}
+\prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{list1} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{101}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{24}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{13}\PY{p}{,}\PY{l+m+mi}{22}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{,}\PY{l+m+mi}{99}\PY{p}{]}
 \PY{k}{def} \PY{n+nf}{Odd}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
@@ -1272,7 +804,7 @@ elements are cube of elements in a given
 list}\label{write-a-program-which-can-map-to-make-a-list-whose-elements-are-cube-of-elements-in-a-given-list}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{20}{\boxspacing}
+\prompt{In}{incolor}{21}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{list2} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{]}
 \PY{k}{def} \PY{n+nf}{cube}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
@@ -1298,7 +830,7 @@ whose elements are cube of even number in a given
 list}\label{write-a-program-which-can-map-and-filter-to-make-a-list-whose-elements-are-cube-of-even-number-in-a-given-list}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{21}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{list3} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{101}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{24}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{13}\PY{p}{,}\PY{l+m+mi}{22}\PY{p}{,}\PY{l+m+mi}{17}\PY{p}{,}\PY{l+m+mi}{99}\PY{p}{]}
 
@@ -1323,13 +855,6 @@ list}\label{write-a-program-which-can-map-and-filter-to-make-a-list-whose-elemen
 64
 10648
     \end{Verbatim}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{ }{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-
-\end{Verbatim}
-\end{tcolorbox}
 
 
     % Add a bibliography block to the postdoc
